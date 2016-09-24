@@ -1,38 +1,19 @@
 import Tetris from './modules/Tetris';
 
-var encoder = new GIFEncoder();
 var tetris = new Tetris();
 var container = document.querySelector('.container');
 
 // init
-encoder.setRepeat(0); //0  -> loop forever
-encoder.setDelay(100); //go to next frame every n milliseconds
 
 
 // Event
 tetris.on('gamestart', function(){
-  encoder.start();
-  encoder.addFrame(tetris.ctx);
 });
 tetris.on('tick', function(){
-  encoder.addFrame(tetris.ctx);
 });
-var timer;
 tetris.on('gameOverEffect', function(){
-  // encoder.addFrame(tetris.ctx);
-  // encoder.setDelay(50);
-  // timer = setInterval(() => {
-  //   encoder.addFrame(tetris.ctx);
-  // }, tetris.tickInterval);
 });
 tetris.on('gamequit', function(){
-  // clearInterval(timer);
-  encoder.finish();
-  
-  var binary_gif = encoder.stream().getData(); //notice this is different from the as3gif package!
-  var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
-  appendLink(data_url);
-  
   tetris.newGame();
 });
 
