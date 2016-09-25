@@ -10,9 +10,9 @@ export default class Tetris extends EventEmitter {
     
     var _this = this;
     
-    this.COLS = 10;
-    this.ROWS = 10;
-    this.BLOCK_SIZE = 30;
+    this.COLS = 13;
+    this.ROWS = 13;
+    this.BLOCK_SIZE = 25;
     this.NUMBER_OF_BLOCK = 4;
     this.HIDDEN_ROWS = this.NUMBER_OF_BLOCK;
     this.LOGICAL_ROWS = this.ROWS + this.HIDDEN_ROWS;
@@ -231,7 +231,8 @@ export default class Tetris extends EventEmitter {
   tick() {
     var _this = this;
     clearTimeout(this.tickId);
-    if (!this.moveBlock('down')) {
+    // if (!this.moveBlock('down')) {
+    if (!this.moveBlock(this.tickDropDirection || 'down')) {
       this.freeze();
       this.clearLines();
       if (this.checkGameOver()) {

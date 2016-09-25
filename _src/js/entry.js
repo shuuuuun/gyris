@@ -15,17 +15,40 @@ var container = document.querySelector('.container');
 
 // init
 document.addEventListener('keydown', function(evt){
+  console.log(evt.key, evt.keyCode, KEYS[evt.keyCode]);
   if (typeof KEYS[evt.keyCode] === 'undefined') return;
   evt.preventDefault();
   
-  console.table(tetris.board);
-  console.table(tetris.rotateBoard());
+  // console.table(tetris.board);
+  // console.table(tetris.rotateBoard());
+  
+  switch (KEYS[evt.keyCode]) {
+    case 'left':
+      tetris.tickDropDirection = 'left';
+      break;
+    case 'right':
+      tetris.tickDropDirection = 'right';
+      break;
+    case 'down':
+      tetris.tickDropDirection = 'down';
+      break;
+    case 'rotate':
+      tetris.moveBlock('rotate');
+      break;
+  }
+}, false);
+
+document.addEventListener('touchstart', function(evt){
+  tetris.moveBlock('rotate');
 }, false);
 
 
 
 // Event
 tetris.on('gamestart', function(){
+});
+tetris.on('newblockcreated', function(){
+  tetris.tickDropDirection = 'down';
 });
 tetris.on('tick', function(){
 });
