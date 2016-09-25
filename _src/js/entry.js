@@ -22,33 +22,52 @@ document.addEventListener('keydown', function(evt){
   // console.table(tetris.board);
   // console.table(tetris.rotateBoard());
   
-  switch (KEYS[evt.keyCode]) {
+  changeDirection(KEYS[evt.keyCode]);
+}, false);
+
+document.addEventListener('touchstart', function(evt){
+  evt.preventDefault();
+  
+  tetris.moveBlock('rotate');
+}, false);
+
+window.addEventListener('devicemotion', (evt) => {
+  
+  //傾き
+  var xg = evt.accelerationIncludingGravity.x || 0;
+  var yg = evt.accelerationIncludingGravity.y || 0;
+  var zg = evt.accelerationIncludingGravity.z || 0;
+  
+  // console.log(xg, yg, zg);
+  var isHorizontal = Math.abs(xg) > Math.abs(yg);
+  var code = isHorizontal ? (xg > 0 ? 'right' : 'left') : (yg > 0 ? null : 'down');
+  console.log(isHorizontal, code);
+  changeDirection(code);
+  
+}, false);
+
+function changeDirection(code) {
+  switch (code) {
     case 'left':
-      tetris.tickDropDirection = 'left';
+      tetris.dropDirection = 'left';
       break;
     case 'right':
-      tetris.tickDropDirection = 'right';
+      tetris.dropDirection = 'right';
       break;
     case 'down':
-      tetris.tickDropDirection = 'down';
+      tetris.dropDirection = 'down';
       break;
     case 'rotate':
       tetris.moveBlock('rotate');
       break;
   }
-}, false);
-
-document.addEventListener('touchstart', function(evt){
-  tetris.moveBlock('rotate');
-}, false);
-
-
+}
 
 // Event
 tetris.on('gamestart', function(){
 });
 tetris.on('newblockcreated', function(){
-  tetris.tickDropDirection = 'down';
+  tetris.dropDirection = 'down';
 });
 tetris.on('tick', function(){
 });

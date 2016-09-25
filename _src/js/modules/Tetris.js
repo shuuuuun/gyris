@@ -28,6 +28,7 @@ export default class Tetris extends EventEmitter {
     this.CLEARLINE_BLOCK_INDEX = 14;
     this.GAMEOVER_BLOCK_INDEX = 15;
     this.BG_COLOR = '#888';
+    this.DEFAULT_DROP_DIRECTION = 'down';
     this.COLOR_LIST = [
       '#FF6666',
       '#FFCC66',
@@ -161,6 +162,7 @@ export default class Tetris extends EventEmitter {
     this.isPlayng = false;
     this.lose = false;
     this.tickInterval = this.DEFAULT_TICK_INTERVAL;
+    this.dropDirection = this.DEFAULT_DROP_DIRECTION;
     this.sumOfClearLines = 0;
     this.score = 0;
     this.frameCount = 0;
@@ -231,8 +233,7 @@ export default class Tetris extends EventEmitter {
   tick() {
     var _this = this;
     clearTimeout(this.tickId);
-    // if (!this.moveBlock('down')) {
-    if (!this.moveBlock(this.tickDropDirection || 'down')) {
+    if (!this.moveBlock(this.dropDirection)) {
       this.freeze();
       this.clearLines();
       if (this.checkGameOver()) {
