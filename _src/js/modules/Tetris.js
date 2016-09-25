@@ -5,7 +5,7 @@ import TouchController from './TouchController';
 import SHAPE_LIST from '../constants/SHAPE_LIST';
 
 export default class Tetris extends EventEmitter {
-  constructor() {
+  constructor(opts = {}) {
     super();
     
     var _this = this;
@@ -73,8 +73,8 @@ export default class Tetris extends EventEmitter {
     this.ctxNext.strokeStyle = this.BG_COLOR;
     
     this.setBlurEvent();
-    this.setKeyEvent();
-    this.setTouchEvent();
+    if (!opts.disableKey) this.setKeyEvent();
+    if (!opts.disableTouch) this.setTouchEvent();
     
     this.renderId = setInterval(function(){ _this.render(); }, this.RENDER_INTERVAL);
   }
@@ -407,6 +407,22 @@ export default class Tetris extends EventEmitter {
       }
     }
     return newBlock;
+  }
+
+  rotateBoard(sign) {
+    const blankRow = Array.apply(null, Array(this.COLS)).map(function(){ return 0; }); // => [0,0,0,0,0,...]
+    const newBoard = [];
+    for ( let y = 0; y < this.ROWS; ++y ) {
+      newBoard[y] = [];
+      for ( let x = 0; x < this.COLS; ++x ) {
+        newBoard[y][x] = this.board[this.COLS - 1 - x + this.HIDDEN_ROWS][y];
+      }
+    }
+    for (let i = 0; i < this.HIDDEN_ROWS; ++i) {
+      newBoard.unshift(blankRow);
+    }
+    this.board = newBoard;
+    return newBoard;
   }
 
   valid(offsetX, offsetY, newBlock) {

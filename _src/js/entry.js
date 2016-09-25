@@ -1,9 +1,27 @@
 import Tetris from './modules/Tetris';
 
-var tetris = new Tetris();
+const KEYS = {
+  37: 'left',  // ←
+  39: 'right',  // →
+  40: 'down',  // ↓
+  38: 'rotate',  // ↑
+  32: 'rotate'  // space
+};
+var tetris = new Tetris({
+  disableTouch: true,
+  disableKey: true,
+});
 var container = document.querySelector('.container');
 
 // init
+document.addEventListener('keydown', function(evt){
+  if (typeof KEYS[evt.keyCode] === 'undefined') return;
+  evt.preventDefault();
+  
+  console.table(tetris.board);
+  console.table(tetris.rotateBoard());
+}, false);
+
 
 
 // Event
