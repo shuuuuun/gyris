@@ -70,9 +70,23 @@ function changeDirection(code) {
 
 // Event
 tetris.on('gamestart', function(){
+  tetris.dropDirection = 'down';
 });
 tetris.on('newblockcreated', function(){
+  console.log(tetris.dropDirection);
   tetris.dropDirection = 'down';
+  switch (tetris.dropDirection) {
+    case 'left':
+      //tetris.rotateWorld(-1);
+      //tetris.rotateBoard();
+      break;
+    case 'right':
+      break;
+    case 'down':
+      break;
+    case 'rotate':
+      break;
+  }
 });
 tetris.on('tick', function(){
 });

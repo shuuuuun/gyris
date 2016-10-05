@@ -79,6 +79,12 @@ export default class Tetris extends EventEmitter {
     
     this.renderId = setInterval(function(){ _this.render(); }, this.RENDER_INTERVAL);
   }
+
+  rotateWorld(sign = 1) { // 1 or -1
+    this.worldDirection += sign;
+    this.cnvs.style.transform = `rotate(${this.worldDirection * 90}deg)`;
+  }
+  
   // Controller ------------------------------
   setBlurEvent() {
     var _this = this;
@@ -163,6 +169,7 @@ export default class Tetris extends EventEmitter {
     this.lose = false;
     this.tickInterval = this.DEFAULT_TICK_INTERVAL;
     this.dropDirection = this.DEFAULT_DROP_DIRECTION;
+    this.worldDirection = 0;
     this.sumOfClearLines = 0;
     this.score = 0;
     this.frameCount = 0;
