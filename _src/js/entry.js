@@ -37,11 +37,16 @@ window.addEventListener('devicemotion', (evt) => {
   var xg = evt.accelerationIncludingGravity.x || 0;
   var yg = evt.accelerationIncludingGravity.y || 0;
   var zg = evt.accelerationIncludingGravity.z || 0;
-  
+
+  var xRatio = Math.abs(xg) / 9.8;
+  var yRatio = Math.abs(yg) / 9.8;
+  var zRatio = Math.abs(zg) / 9.8;
+    
   // console.log(xg, yg, zg);
   var isHorizontal = Math.abs(xg) > Math.abs(yg);
   var code = isHorizontal ? (xg > 0 ? 'right' : 'left') : (yg > 0 ? null : 'down');
-  console.log(isHorizontal, code);
+  tetris.tickInterval = 500 * (1 - (isHorizontal ? xRatio : yRatio)) + 50;
+  //console.log(isHorizontal, code, xg, yg, tetris.tickInterval);
   changeDirection(code);
   
 }, false);
