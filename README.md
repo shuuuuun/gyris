@@ -1,5 +1,5 @@
 # GYRIS
 
-gyro + tetris mock.
+gyro + tetris mockup.
 
-https://shuuuuun.github.io/gyris/
+DEMO: https://shuuuuun.github.io/gyris/
